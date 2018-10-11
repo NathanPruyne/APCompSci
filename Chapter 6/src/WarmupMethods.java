@@ -26,11 +26,18 @@ public class WarmupMethods {
 	}
 	
 	public static int sumDigitsWhile(int num) {
-		return num;
+		int total = 0;
+		
+		while (num != 0) {
+			total += num % 10;
+			num = num/10;
+		}
+		
+		return total;
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(sumDigitsFor(50249));
-		System.out.println(sumDigitsFor(16));
+		System.out.println(sumDigitsWhile(50249));
+		System.out.println(sumDigitsWhile(16));
 	}
 }
