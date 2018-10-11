@@ -41,3 +41,4 @@ public class WarmupMethods {
 		System.out.println(sumDigitsWhile(16));
 	}
 }
+
