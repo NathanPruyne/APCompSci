@@ -16,7 +16,7 @@ public class WarmupMethods {
 		return sum;
 	}
 	
-	public static int sumDigits(int num) {
+	public static int sumDigitsFor(int num) {
 		int numDigits = Integer.toString(num).length();
 		int sum = 0;
 		for (int i = 0; i < numDigits; i++) {
@@ -25,8 +25,12 @@ public class WarmupMethods {
 		return sum;
 	}
 	
+	public static int sumDigitsWhile(int num) {
+		return num;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(sumDigits(50249));
-		System.out.println(sumDigits(16));
+		System.out.println(sumDigitsFor(50249));
+		System.out.println(sumDigitsFor(16));
 	}
 }
