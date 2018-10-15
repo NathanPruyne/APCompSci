@@ -36,9 +36,39 @@ public class WarmupMethods {
 		return total;
 	}
 	
+	public static int count7(int low, int high) {
+		int valueCount = 0;
+		for (int i = low; i <= high; i++) {
+			if (i % 7 == 0) {
+				valueCount++;
+			}
+		}
+		return valueCount;
+	}
+	
+	public static int countsh(String text) {
+		int shCount = 0;
+		for (int i = 0; i < text.length() - 1; i++) {
+			if (text.substring(i,i+2).equals("sh")) {
+				shCount++;
+			}
+		}
+		return shCount;
+	}
+	
+	public static String starTriangle(int n) {
+		String triangle = "";
+		for (int i = 0; i <= n; i++) {
+			for (int j = 1; j <= i; j++) {
+				triangle += "* ";
+			}
+			triangle += "\n";
+		}
+		return triangle;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(sumDigitsWhile(50249));
-		System.out.println(sumDigitsWhile(16));
+		System.out.println(starTriangle(4));
 	}
 }
 
