@@ -67,8 +67,28 @@ public class WarmupMethods {
 		return triangle;
 	}
 	
+	public static boolean isPrime(int num) {
+		for (int i = num - 1; i > 1; i--) {
+			if (num % i == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static String listPrimes(int num) {
+		String primes = "";
+		for (int i = num; i > 1; i--) {
+			if (isPrime(i)) {
+				primes = primes + i + ", ";
+			}
+		}
+		return primes.substring(0,primes.length() - 2);
+	}
+	
+	
 	public static void main(String[] args) {
-		System.out.println(starTriangle(4));
+		System.out.println(listPrimes(1000));
 	}
 }
 
