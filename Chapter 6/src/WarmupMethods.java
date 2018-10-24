@@ -66,7 +66,7 @@ public class WarmupMethods {
 		}
 		return triangle;
 	}
-	
+
 	public static boolean isPrime(int num) {
 		for (int i = num - 1; i > 1; i--) {
 			if (num % i == 0) {
