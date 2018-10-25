@@ -91,6 +91,3 @@ public class WarmupMethods {
 		System.out.println(listPrimes(1000));
 	}
 }
-
-
-
