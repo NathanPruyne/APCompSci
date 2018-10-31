@@ -19,7 +19,15 @@ public class JavaCircle {
 	private double myYCenter;
 	private String myColor;
 	
-	//2. constructor
+	//2. constructor - special method to assign initial values to all instance fields
+	//called whenever a new instance of class is made
+	//has no return, name is same as name of class
+	public JavaCircle(double r, double x, double y, String c) {
+		myRadius = r;
+		myXCenter = x;
+		myYCenter = y;
+		myColor = c;
+	}
 	
 	//3. methods - two basic types: accessor (getter) and mutator (setter)
 	
