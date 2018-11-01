@@ -15,17 +15,22 @@ public class JavaCircle {
 	//declared in class, not method
 	//can be primatives or other objects
 	private double myRadius; //almost always private for data protection
-	private double myXCenter;
-	private double myYCenter;
+	private CoordinatePoint myCenter;
 	private String myColor;
 	
 	//2. constructor - special method to assign initial values to all instance fields
 	//called whenever a new instance of class is made
 	//has no return, name is same as name of class
+	public JavaCircle(double r, CoordinatePoint center, String c) {
+		myRadius = r;
+		myCenter = center;
+		myColor = c;
+	}
+	
+	//can put x and y, we'll make it coordinate point
 	public JavaCircle(double r, double x, double y, String c) {
 		myRadius = r;
-		myXCenter = x;
-		myYCenter = y;
+		myCenter = new CoordinatePoint(x, y);
 		myColor = c;
 	}
 	
@@ -38,12 +43,16 @@ public class JavaCircle {
 		return myRadius; //how to access myRadius if you need it in different class
 	}
 	
+	public CoordinatePoint getCenter() {
+		return myCenter;
+	}
+	
 	public double getXCenter() {
-		return myXCenter;
+		return myCenter.getX();
 	}
 	
 	public double getYCenter() {
-		return myYCenter;
+		return myCenter.getY();
 	}
 	
 	public String myColor() {
@@ -56,12 +65,16 @@ public class JavaCircle {
 		myRadius = r;
 	}
 	
+	public void setCenter(CoordinatePoint c) {
+		myCenter = c;
+	}
+	
 	public void setXCenter(double x) {
-		myXCenter = x;
+		myCenter.setX(x);
 	}
 	
 	public void setYCenter(double y) {
-		myYCenter = y;
+		myCenter.setX(y);
 	}
 	
 	public void setColor(String c) {
