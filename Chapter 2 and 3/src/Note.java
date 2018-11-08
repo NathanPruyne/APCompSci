@@ -1,32 +1,37 @@
-
 public class Note {
 
-	private double length;
-	private String pitch;
-	private double volume;
+	private double myLength;
+	private int myPitch;
+	private int myVolume;
+	
+	public Note(double length, int pitch, int volume) {
+		myLength = length;
+		myPitch = pitch;
+		myVolume = volume;
+	}
 	
 	public double getLength() {
-		return length;
+		return myLength;
 	}
 	
 	public void setLength(double l) {
-		length = l;
+		myLength = l;
 	}
 	
-	public String getPitch() {
-		return pitch;
+	public int getPitch() {
+		return myPitch;
 	}
 	
-	public void setPitch(String p) {
-		pitch = p;
+	public void setPitch(int p) {
+		myPitch = p;
 	}
 	
-	public double getVolume() {
-		return volume;
+	public int getVolume() {
+		return myVolume;
 	}
 	
-	public void setVolume(double v) {
-		volume = v;
+	public void setVolume(int v) {
+		myVolume = v;
 	}
 	
 }

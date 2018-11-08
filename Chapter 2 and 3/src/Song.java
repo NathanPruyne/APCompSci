@@ -1,87 +1,117 @@
 import java.util.ArrayList;
 
+import javax.sound.midi.*;
+
 
 public class Song {
 
-	private String name;
-	private String key;
-	private double length;
-	private ArrayList<Note> notes = new ArrayList<Note>();
-	private int bpm;
+	private String myName;
+	private String myKey;
+	private double myLength;
+	private ArrayList<Note> myNotes = new ArrayList<Note>();
+	private int myBpm;
 	
-	public Song(String n, String k, double l, int b) {
-		name = n;
-		key = k;
-		length = l;
-		bpm = b;
+	public Song(String name, String key, double length, int bpm) {
+		myName = name;
+		myKey = key;
+		myLength = length;
+		myBpm = bpm;
 	}
 	
-	public Song(String n, String k, double l, ArrayList<Note> noteList, int b) {
-		name = n;
-		key = k;
-		length = l;
-		notes = noteList;
-		bpm = b;
+	public Song(String name, String key, double length, ArrayList<Note> notes, int bpm) {
+		myName = name;
+		myKey = key;
+		myLength = length;
+		myNotes = notes;
+		myBpm = bpm;
 	}
 	
 	public String toString() {
-		return name + ": a song in " + key + " with bpm " + bpm + " and length " + length;
+		return myName + ": a song in " + myKey + " with bpm " + myBpm + " and length " + myLength;
 	}
 	
 	public String getName() {
-		return name;
+		return myName;
 	}
 
 	public void setName(String n) {
-		name = n;
+		myName = n;
 	}
 
 	public String getKey() {
-		return key;
+		return myKey;
 	}
 	
 	public void setKey(String k) {
-		key = k;
+		myKey = k;
 	}
 
 	public double getLength() {
-		return length;
+		return myLength;
 	}
 
 	public void setLength(double l) {
-		length = l;
+		myLength = l;
 	}
 
 	public int getBpm() {
-		return bpm;
+		return myBpm;
 	}
 
 	public void setBpm(int b) {
-		bpm = b;
+		myBpm = b;
 	}
 
 	public ArrayList<Note> getNotes() {
-		return notes;
+		return myNotes;
 	}
 
 	public void setNotes(ArrayList<Note> n) {
-		notes = n;
+		myNotes = n;
 	}
 
 	public Note getNote(int pos) {
-		return notes.get(pos);
+		return myNotes.get(pos);
 	}
 	
 	public void changeNote(int pos, Note newNote) {
-		notes.set(pos, newNote);
+		myNotes.set(pos, newNote);
 	}
 	
 	public void addNote(Note n) {
-		notes.add(n);
+		myNotes.add(n);
 	}
 	
 	public void removeNote(int pos) {
-		notes.remove(pos);
+		myNotes.remove(pos);
+	}
+	
+	public void playSong() {
+		
+		try {
+			Synthesizer synth = MidiSystem.getSynthesizer();
+			synth.open();
+			
+			Instrument[] instr = synth.getAvailableInstruments();
+			MidiChannel[] mChannels = synth.getChannels();
+			
+			synth.loadInstrument(instr[0]);
+			for (Note note : myNotes) {
+				mChannels[0].noteOn(note.getPitch(), note.getVolume());
+				try {
+					Thread.sleep((long) (note.getLength() / myBpm * 60000));
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				mChannels[0].noteOff(note.getPitch());
+			}
+			
+		} catch (MidiUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
