@@ -34,6 +34,23 @@ public class JavaCircle {
 		myColor = c;
 	}
 	
+	public JavaCircle() {
+		/* 
+		myRadius = 1;
+		myCenter = new CoordinatePoint();
+		myColor = "Black";
+		This is inefficient, ugh
+		*/
+		
+		//can use this keyword to call other constructor
+		this(1, new CoordinatePoint(), "Black"); //used the other constructor by calling this
+	}
+	
+	public JavaCircle(String c) {
+		//only define color
+		this(1, new CoordinatePoint(), c); //save some time by just assigning c
+	}
+	
 	//3. methods - two basic types: accessor (getter) and mutator (setter)
 	
 	//accessors - access (get) current value of instance field
@@ -55,8 +72,13 @@ public class JavaCircle {
 		return myCenter.getY();
 	}
 	
-	public String myColor() {
-		return myColor;
+	public String getColor() {
+		//changed this to show this: this object's color (just emphasis in this case)
+		return this.myColor;
+	}
+	
+	public double getArea() {
+		return (Math.PI)* Math.pow(myRadius, 2); 
 	}
 	
 	//mutator methods: change (set) value of instance fields
