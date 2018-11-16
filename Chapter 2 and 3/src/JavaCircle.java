@@ -102,4 +102,11 @@ public class JavaCircle {
 	public void setColor(String c) {
 		myColor = c;
 	}
+	
+	//final method: toString: returns state of object
+	
+	public String toString() {
+		return "JavaCircle with radius " + myRadius + ", center at (" + this.getXCenter() + "," + this.getYCenter() +") and color " + myColor;
+	}
+	
 }

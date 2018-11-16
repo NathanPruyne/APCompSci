@@ -18,7 +18,7 @@ public class ClassTesters {
 		//set the radius of spookyCircle to random integer between 1 and 10
 		spookyCircle.setRadius((int)(Math.random() * 10) + 1);
 		System.out.println(spookyCircle.getRadius());
-		*/
+		
 		
 		//create coordinate point object at (2, 3)
 		CoordinatePoint c = new CoordinatePoint(2 , 3);
@@ -32,6 +32,17 @@ public class ClassTesters {
 		
 		//or...
 		JavaCircle funnerC = new JavaCircle(3, new CoordinatePoint(-3, 8), "orange");
+		*/
+		
+		JavaCircle purpleC = new JavaCircle(2, 6, -2, "Purple");
+		
+		//print out state of the object (values of instance fields)
+		System.out.println(purpleC.getRadius());
+		System.out.println(purpleC.getXCenter());
+		System.out.println(purpleC.getYCenter());
+		System.out.println(purpleC.getColor());
+		//pretty long, can make and use a toString instead
+		System.out.println(purpleC); //don't even need to call toString, prints that automatically
 	}
 	
 }
