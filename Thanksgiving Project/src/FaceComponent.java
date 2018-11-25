@@ -12,9 +12,6 @@ A class that draws an alien face.
 */
 public class FaceComponent extends JComponent
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public void paintComponent(Graphics g)
@@ -83,8 +80,6 @@ public class FaceComponent extends JComponent
 		Rectangle hat = new Rectangle(85, 10, 80, 30);
 		
 		g2.fill(hat);
-		
-		//Rectangle leg = new Rectangle(95, 190, 5, 25);
 		
 		int[] xPtsLeg = {95, 95, 90, 98, 100, 102, 110, 105, 105};
 		int[] yPtsLeg = {190, 215, 225, 215, 225, 215, 225, 215, 190};
