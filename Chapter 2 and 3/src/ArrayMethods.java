@@ -16,7 +16,7 @@ public class ArrayMethods
 		String res = "";
 		
 		for (int i = 0; i < values.length; i++) {
-			res += "subscript[" + i + "] = " + values[i];
+			res += "subscript[" + i + "] = " + values[i] + "\n";
 		}
 		
 		return res;
@@ -47,7 +47,7 @@ public class ArrayMethods
 	public static double average(int[] values)
 	{
 		
-		return sum(values) / values.length;
+		return (double) sum(values) / values.length;
 		
 	}
 	
@@ -78,11 +78,11 @@ public class ArrayMethods
 	{		
 	
 		int[] returned = new int[length];
-		//initialize returned to all 0s
+		/* //initialize returned to all 0s
 		for (int i = 0; i < length; i++) {
 			returned[i] = 0;
 		}
-		
+		*/
 		for (int i = 0; i < times; i++) {
 			int value = (int) (Math.random() * length);
 			returned[value] += 1;
@@ -152,7 +152,16 @@ public class ArrayMethods
 			smallest value in the array*/
 	public static int min(int[] values)
 	{
+		int min = Integer.MAX_VALUE;
 		
+		for (int val: values) {
+			if (val < min) {
+				min = val;
+			}
+		}
+		
+		return min;
+ 	
 	}
 	
 	
@@ -161,6 +170,16 @@ public class ArrayMethods
 			index where the minimum value occurs in the array*/
 	public static int minIndex(int[] values)
 	{
+		
+		int min = min(values);
+		
+		for (int i = 0; i < values.length; i++) {
+			if (values[i] == min) {
+				return i;
+			}
+		}
+		
+		return -1;
 		
 	}
 	
@@ -172,6 +191,16 @@ public class ArrayMethods
 	public static int occurrences(int[] values, int target)
 	{
 		
+		int count = 0;
+		
+		for (int val: values) {
+			if (val == target) {
+				count++;
+			}
+		}
+		
+		return count;
+		
 	}
 	
 	
@@ -182,6 +211,16 @@ public class ArrayMethods
 			within the lowerbound and upperbound (these are indices in the array)*/
 	public static int occurrences(int[] values, int lowerbound, int upperbound, int target)
 	{
+		
+		int count = 0;
+		
+		for (int i = lowerbound; i <= upperbound; i++) {
+			if (values[i] == target) {
+				count++;
+			}
+		}
+		
+		return count;
 		
 	}
 	
@@ -206,6 +245,15 @@ public class ArrayMethods
 	public static int repeats(int[] values)
 	{
 
+		int count = 0;
+		
+		for (int i = 0; i < values.length - 1; i++) {
+			if (values[i] == values[i + 1]) {
+				count++;
+			}
+		}
+		
+		return count;
 		
 	}
 	
@@ -235,11 +283,19 @@ public class ArrayMethods
 	*/
 	public static int largestGap(int[] values) 
 	{
+		int maxGap = 0;
+		int maxGapIndex = -1;
 		
+		for (int i = 0; i < values.length - 1; i++) {
+			int gap = Math.abs(values[i] - values[i + 1]);
+			if (gap > maxGap) {
+				maxGap = gap;
+				maxGapIndex = i;
+			}
+		}
+		
+		return maxGapIndex;
 	}
-	
-	
-	
 	
 }
 
