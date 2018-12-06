@@ -1,6 +1,18 @@
 import java.awt.Rectangle;
+import java.util.Arrays;
 
 public class ArrayNotes {
+	
+	//fill 2D array, values[r][c] = r * c + 1
+	public static int[][] fillArray(int r, int c) {
+		int[][] res = new int[r][c];
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				res[i][j] = i * j + 1;
+			}
+		}
+		return res;
+	}
 
 	public static void main(String[] args) {
 		
@@ -49,6 +61,15 @@ public class ArrayNotes {
 		
 		System.out.println(rectangles[4].getWidth());
 		
+		//2D arrays (matrices/tables)
+		//make a "4 X 5" array
+		int [][] values = new int[5][4]; //rows, then columns
+		//set value in row 4, column 3:
+		values[3][2] = 7; //subtract 1 bc indices start at 0
+		System.out.println(values.length); //gives number of rows
+		System.out.println(values[0].length); //gives number of columns (how many in row)
+		values = fillArray(5, 4);
+		System.out.println(Arrays.deepToString(values));
 	}
 	
 }
