@@ -1,4 +1,5 @@
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ArrayNotes {
@@ -13,6 +14,20 @@ public class ArrayNotes {
 		}
 		return res;
 	}
+	
+	
+	//adds param value to array numbers (param) at index index (param)
+	public static int[] addSlot(int[] numbers, int index, int value) {
+		int[] res = new int[numbers.length + 1];
+		for (int i = 0; i < index; i++) {
+			res[i] = numbers[i];
+		}
+		res[index] = value;
+		for (int i = index; i < numbers.length; i++) {
+			res[i + 1] = numbers[i];
+		}
+		return res;
+	} //this is long and inefficient, use ArrayLists instead
 
 	public static void main(String[] args) {
 		
@@ -70,6 +85,25 @@ public class ArrayNotes {
 		System.out.println(values[0].length); //gives number of columns (how many in row)
 		values = fillArray(5, 4);
 		System.out.println(Arrays.deepToString(values));
+		
+		System.out.println(Arrays.toString(numbers));
+		System.out.println(Arrays.toString(addSlot(numbers, 8, 8)));
+		
+		//ArrayLists (start with import at top):
+		//Declare and instantiate: ArrayList<ClassName> variableName = new ArrayList<ClassName>();
+		ArrayList<String> words = new ArrayList<String>();
+		words.add("ok"); //.add adds to end of the ArrayList
+		words.add("memez");
+		words.add("epic");
+		words.add("zzzz"); 
+		words.add(2, "index2boyz");
+		//is now: {"ok", "memez", "index2boyz", "epic", "zzzz"}
+		words.remove(2); //removes at index (bye bye index2boyz)
+		
+		System.out.println(words.get(3)); //words.get returns at position
+		System.out.println(words.remove(2)); //words.remove will return the removed value, so can view it
+		
+		System.out.println(words.size()); //find size (not length)
 	}
 	
 }
