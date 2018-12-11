@@ -104,6 +104,30 @@ public class ArrayNotes {
 		System.out.println(words.remove(2)); //words.remove will return the removed value, so can view it
 		
 		System.out.println(words.size()); //find size (not length)
+		
+		//Primatives in ArrayLists (you can't do it)
+		//Use wrapper classes instead (Integer, Double, etc.)
+		Integer x = new Integer(5); //an integer is now an object
+		x = 6; //can use just like integer now
+		int y = 5 + x;
+		ArrayList<Integer> numbersAL = new ArrayList<Integer>();
+		numbersAL.add(new Integer(4));
+		numbersAL.add(x);
+		numbersAL.add(3); //can still just add ints, will be turned into Integer
+		//traversing an ArrayList
+		for (int i = 0; i < words.size(); i++) { //use .size()
+			System.out.println(words.get(i)); //use .get()
+		}
+		//using a for each (enhanced for loop)
+		for (String word: words) { //gives each value in words
+			System.out.println(word.length()); //gives the value right away (no indices here)
+		}
+		/* equivalent to:
+		 * for(int i = 0; i < words.size(); i++) {
+		 * 	String s = words.get(i);
+		 * 	System.out.println(s.length());
+		 *}
+		 */
 	}
 	
 }
