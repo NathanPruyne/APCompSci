@@ -27,6 +27,15 @@ public class MoreArrayMethods {
 		return sums;
 	}
 	
+	public static int arraySearch(int[] arr, int target) {
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] == target) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println(Arrays.toString(sumCols(ArrayNotes.fillArray(10, 24))));
 		System.out.println(Arrays.toString(sumRows(ArrayNotes.fillArray(10, 24))));
