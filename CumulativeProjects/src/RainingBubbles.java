@@ -16,6 +16,7 @@ import java.applet.*; //Enables the creation of an "applet"
 import java.awt.event.ActionEvent; //Utility to create various events
 import java.awt.event.ActionListener; //Utility to recieve action events
 import java.awt.geom.Ellipse2D; //Utility to generate ellipses
+import java.awt.geom.Rectangle2D;
 import java.awt.Graphics2D; //utility to generate geometrical shapes
 
 import javax.swing.Timer; //Utility to fire ActionEvents at regular intervals
@@ -29,14 +30,18 @@ public class RainingBubbles extends Applet
 	//constants to control size, speed, number of circles...
 	private final int DELAY = 30;
 	private final int MAX_SIZE = 50;
-	private final int MAX_CIRCLES = 100;
-	private final int MAX_VELOCITY = 20;
+	private final int MAX_CIRCLES = 10;
+	private final int MAX_Y_VELOCITY = 10;
+	private final int MAX_X_VELOCITY = 10;
 	
 	//these are called "parallel arrays." Is there a better way to handle all
 	//of this data?  Hint... these could all be ATTRIBUTES of a certain class.  Make that class and 
 	//create a single array of that object.
 	
 	private Bubble[] bubbles;
+	
+	private int playerX;
+	private int playerY;
 
 	public void init() 
 	{
@@ -48,10 +53,13 @@ public class RainingBubbles extends Applet
 		//sets the screen size to the set default screen size
 		//again, change these parallel arrays to make them better.
 		bubbles = new Bubble[MAX_CIRCLES];
-		
+		boolean good = true;
+		playerX = this.getWidth() / 2;
+		playerY = this.getHeight() / 4 * 3;
 		for(int count = 0;count < MAX_CIRCLES; count++)
 		{
-			bubbles[count] = new Bubble(this.getWidth(), MAX_VELOCITY, MAX_SIZE);//gives each circle initial values by "resetting" it
+			bubbles[count] = new Bubble(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, good);//gives each circle initial values by "resetting" it
+			good = !good;
 		}
 		
 		//I needed this to use "repaint" the screen. It uses a timer which is "listenedTo" by an ActionListener
@@ -93,22 +101,38 @@ public class RainingBubbles extends Applet
 	{	
 		Ellipse2D circle;
 		Graphics2D g2 = (Graphics2D)g;
+		Rectangle2D player;
+		
+		player = new Rectangle2D.Double(playerX, playerY, 20, 20);
 		
 		//Document this...what's going on in each line?... there should be a comment for each line.
 		for(int count = 0;count < MAX_CIRCLES; count++)
 		{
 			Bubble thisBubble = bubbles[count];
 			thisBubble.addY(); //update y by yvelocity
+			thisBubble.addX(); //update x by xvelocity
 			
-			if(thisBubble.getY()>this.getHeight()) //if the circle's y is off the screen
+			if(thisBubble.getY()>this.getHeight() || thisBubble.getY() < 0)  //if the circle's y is off the screen
 			{
-				thisBubble.reset(this.getWidth(), MAX_VELOCITY, MAX_SIZE); //reset the circle
+				thisBubble.setyVelocity(thisBubble.getyVelocity() * -1); //bounce
 			}
-	
-			g2.setPaint(Color.blue); //set the color to blue
-			circle =new Ellipse2D.Double(thisBubble.getX(), thisBubble.getY(), thisBubble.getSize(), thisBubble.getSize()); //generate the circle graphically	
+			if(thisBubble.getX()>this.getWidth() || thisBubble.getX() < 0)  //if the circle's y is off the screen
+			{
+				thisBubble.setxVelocity(thisBubble.getxVelocity() * -1); //bounce
+			}
+			if (thisBubble.isGood()) { //if this bubble is "good"
+				g2.setPaint(Color.green); //set the color to green
+			} else {
+				g2.setPaint(Color.red);
+			}
+			circle = new Ellipse2D.Double(thisBubble.getX(), thisBubble.getY(), thisBubble.getSize(), thisBubble.getSize()); //generate the circle graphically	
+			if (circle.intersects(player)) {
+				thisBubble.reset(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, thisBubble.isGood());
+			}
 			g2.fill(circle); //display the circle on the screen
-					
+			System.out.println(playerX);
+			g2.setPaint(Color.orange);
+			g2.fill(player);
 		}
 	}
 }
