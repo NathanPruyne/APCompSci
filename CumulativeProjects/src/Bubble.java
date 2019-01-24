@@ -7,6 +7,7 @@ public class Bubble {
 	private int xVelocity;
 	private int size;
 	private boolean good;
+	private int score;
 	
 	public Bubble(int width, int height, int max_y_vel, int max_x_vel, int max_size, boolean good) {
 		this.reset(width, height, max_y_vel, max_x_vel, max_size, good);
@@ -23,6 +24,11 @@ public class Bubble {
 		}
 		size = (int)(Math.random()* (max_size - 20)) + 20;
 		this.setGood(good);
+		if (good) {
+			score = (int) (Math.sqrt(Math.pow(xVelocity, 2) + Math.pow(yVelocity, 2))) * (max_size - size) / 10;
+		} else {
+			score = (int) (Math.sqrt(max_x_vel * max_x_vel + max_y_vel * max_y_vel) - Math.sqrt(Math.pow(xVelocity, 2) + Math.pow(yVelocity, 2))) * (size) / -10;
+		}
 	}
 	
 	public int getX() {
@@ -78,6 +84,14 @@ public class Bubble {
 
 	public void setGood(boolean good) {
 		this.good = good;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 }

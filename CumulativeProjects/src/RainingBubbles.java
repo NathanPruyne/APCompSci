@@ -15,8 +15,10 @@ import java.awt.*; //Contains all classes for creating graphics
 import java.applet.*; //Enables the creation of an "applet"
 import java.awt.event.ActionEvent; //Utility to create various events
 import java.awt.event.ActionListener; //Utility to recieve action events
+import java.awt.event.KeyEvent; //Utility to detect keypresses
+import java.awt.event.KeyListener; //Utility to do things when keypress detected
 import java.awt.geom.Ellipse2D; //Utility to generate ellipses
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D; //Utility to generate rectangles
 import java.awt.Graphics2D; //utility to generate geometrical shapes
 
 import javax.swing.Timer; //Utility to fire ActionEvents at regular intervals
@@ -42,6 +44,7 @@ public class RainingBubbles extends Applet
 	
 	private int playerX;
 	private int playerY;
+	private int score;
 
 	public void init() 
 	{
@@ -127,12 +130,18 @@ public class RainingBubbles extends Applet
 			}
 			circle = new Ellipse2D.Double(thisBubble.getX(), thisBubble.getY(), thisBubble.getSize(), thisBubble.getSize()); //generate the circle graphically	
 			if (circle.intersects(player)) {
-				thisBubble.reset(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, thisBubble.isGood());
+				score += thisBubble.getScore();
+				thisBubble.reset(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, thisBubble.isGood());	
 			}
 			g2.fill(circle); //display the circle on the screen
-			System.out.println(playerX);
+			g2.setFont(new Font("Arial", Font.PLAIN, 12));
+			g2.setPaint(Color.black);
+			g2.drawString(Integer.toString(thisBubble.getScore()), thisBubble.getX() + thisBubble.getSize() / 3, thisBubble.getY());
 			g2.setPaint(Color.orange);
 			g2.fill(player);
+			g2.setFont(new Font("Arial", Font.BOLD, 35));
+			g2.setPaint(Color.black);
+			g2.drawString("Score: " + score, 25, 40);
 		}
 	}
 }
