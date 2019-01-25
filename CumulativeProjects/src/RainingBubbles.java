@@ -44,6 +44,8 @@ public class RainingBubbles extends Applet
 	
 	private int playerX;
 	private int playerY;
+	private int playerdX;
+	private int playerdY;
 	private int score;
 
 	public void init() 
@@ -73,6 +75,30 @@ public class RainingBubbles extends Applet
 				repaint();
 			}
 		};
+		
+		KeyListener keyDetector = new KeyListener()
+		{
+			public void keyPressed(KeyEvent press) {
+				if (press.getKeyCode() == KeyEvent.VK_LEFT) {
+					playerdX -= 10;
+				}
+				if (press.getKeyCode() == KeyEvent.VK_RIGHT) {
+					playerdX += 10;
+				}
+				if (press.getKeyCode() == KeyEvent.VK_UP) {
+					playerdY -= 10;
+				}
+				if (press.getKeyCode() == KeyEvent.VK_DOWN) {
+					playerdY += 10;
+				}
+			}
+
+			public void keyReleased(KeyEvent arg0) {}
+
+			public void keyTyped(KeyEvent arg0) {}
+		};
+		
+		this.addKeyListener(keyDetector);
 		
 		new Timer(DELAY, taskPerformer).start();
 		
@@ -114,23 +140,43 @@ public class RainingBubbles extends Applet
 			Bubble thisBubble = bubbles[count];
 			thisBubble.addY(); //update y by yvelocity
 			thisBubble.addX(); //update x by xvelocity
+			playerX += playerdX;
+			playerY += playerdY;
+			if (Math.abs(playerdX) < 3) {
+				playerdX = 0;
+			} else if (playerdX > 0) {
+				playerdX -= 2;
+			} else if (playerdX < 0) {
+				playerdX += 2;
+			}
+			if (Math.abs(playerdY) < 3) {
+				playerdY = 0;
+			} else if (playerdY > 0) {
+				playerdY -= 2;
+			} else if (playerdY < 0) {
+				playerdY += 2;
+			}
+			System.out.println(playerdX);
 			
-			if(thisBubble.getY()>this.getHeight() || thisBubble.getY() < 0)  //if the circle's y is off the screen
+			if(thisBubble.getY()>this.getHeight() - thisBubble.getSize() || thisBubble.getY() < 0)  //if the circle's y is off the screen
 			{
 				thisBubble.setyVelocity(thisBubble.getyVelocity() * -1); //bounce
 			}
-			if(thisBubble.getX()>this.getWidth() || thisBubble.getX() < 0)  //if the circle's y is off the screen
+			if(thisBubble.getX()>this.getWidth() - thisBubble.getSize() || thisBubble.getX() < 0)  //if the circle's y is off the screen
 			{
 				thisBubble.setxVelocity(thisBubble.getxVelocity() * -1); //bounce
 			}
 			if (thisBubble.isGood()) { //if this bubble is "good"
 				g2.setPaint(Color.green); //set the color to green
 			} else {
-				g2.setPaint(Color.red);
+				g2.setPaint(Color.red); //otherwise make it red
 			}
 			circle = new Ellipse2D.Double(thisBubble.getX(), thisBubble.getY(), thisBubble.getSize(), thisBubble.getSize()); //generate the circle graphically	
 			if (circle.intersects(player)) {
 				score += thisBubble.getScore();
+				if (score < 0) {
+					score = 0;
+				}
 				thisBubble.reset(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, thisBubble.isGood());	
 			}
 			g2.fill(circle); //display the circle on the screen
