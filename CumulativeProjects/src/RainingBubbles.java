@@ -19,6 +19,8 @@ import java.awt.event.KeyEvent; //Utility to detect keypresses
 import java.awt.event.KeyListener; //Utility to do things when keypress detected
 import java.awt.geom.Ellipse2D; //Utility to generate ellipses
 import java.awt.geom.Rectangle2D; //Utility to generate rectangles
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.Graphics2D; //utility to generate geometrical shapes
 
 import javax.swing.Timer; //Utility to fire ActionEvents at regular intervals
@@ -47,6 +49,8 @@ public class RainingBubbles extends Applet
 	private int playerdX;
 	private int playerdY;
 	private int score;
+	
+	ArrayList<Integer> keys = new ArrayList<Integer>();
 
 	public void init() 
 	{
@@ -76,27 +80,23 @@ public class RainingBubbles extends Applet
 			}
 		};
 		
+		
+		
 		KeyListener keyDetector = new KeyListener()
 		{
 			public void keyPressed(KeyEvent press) {
-				if (press.getKeyCode() == KeyEvent.VK_LEFT) {
-					playerdX -= 10;
-				}
-				if (press.getKeyCode() == KeyEvent.VK_RIGHT) {
-					playerdX += 10;
-				}
-				if (press.getKeyCode() == KeyEvent.VK_UP) {
-					playerdY -= 10;
-				}
-				if (press.getKeyCode() == KeyEvent.VK_DOWN) {
-					playerdY += 10;
+				if (!keys.contains(press.getKeyCode())) {
+					keys.add(press.getKeyCode());
 				}
 			}
 
-			public void keyReleased(KeyEvent arg0) {}
+			public void keyReleased(KeyEvent release) {
+				keys.remove(keys.indexOf(release.getKeyCode()));
+			}
 
 			public void keyTyped(KeyEvent arg0) {}
 		};
+		
 		
 		this.addKeyListener(keyDetector);
 		
@@ -131,8 +131,51 @@ public class RainingBubbles extends Applet
 		Ellipse2D circle;
 		Graphics2D g2 = (Graphics2D)g;
 		Rectangle2D player;
-		
 		player = new Rectangle2D.Double(playerX, playerY, 20, 20);
+		if (keys.contains(KeyEvent.VK_LEFT)) {
+			playerdX -= 2;
+		}
+		if (keys.contains(KeyEvent.VK_RIGHT)) {
+			playerdX += 2;
+		}
+		if (keys.contains(KeyEvent.VK_UP)) {
+			playerdY -= 2;
+		}
+		if (keys.contains(KeyEvent.VK_DOWN)) {
+			playerdY += 2;
+		}
+		playerX += playerdX;
+		playerY += playerdY;
+		if (playerY < 0) {
+			playerY = 0;
+			playerdY = 0;
+		}
+		if (playerY > this.getHeight() - 20) {
+			playerY = this.getHeight() - 20;
+			playerdY = 0;
+		}
+		if (playerX < 0) {
+			playerX = 0;
+			playerdX = 0;
+		}
+		if (playerX > this.getWidth() - 20) {
+			playerX = this.getWidth() - 20;
+			playerdX = 0;
+		}
+		if (Math.abs(playerdX) < 1) {
+			playerdX = 0;
+		} else if (playerdX > 0) {
+			playerdX -= 1;
+		} else if (playerdX < 0) {
+			playerdX += 1;
+		}
+		if (Math.abs(playerdY) < 1) {
+			playerdY = 0;
+		} else if (playerdY > 0) {
+			playerdY -= 1;
+		} else if (playerdY < 0) {
+			playerdY += 1;
+		}
 		
 		//Document this...what's going on in each line?... there should be a comment for each line.
 		for(int count = 0;count < MAX_CIRCLES; count++)
@@ -140,23 +183,6 @@ public class RainingBubbles extends Applet
 			Bubble thisBubble = bubbles[count];
 			thisBubble.addY(); //update y by yvelocity
 			thisBubble.addX(); //update x by xvelocity
-			playerX += playerdX;
-			playerY += playerdY;
-			if (Math.abs(playerdX) < 3) {
-				playerdX = 0;
-			} else if (playerdX > 0) {
-				playerdX -= 2;
-			} else if (playerdX < 0) {
-				playerdX += 2;
-			}
-			if (Math.abs(playerdY) < 3) {
-				playerdY = 0;
-			} else if (playerdY > 0) {
-				playerdY -= 2;
-			} else if (playerdY < 0) {
-				playerdY += 2;
-			}
-			System.out.println(playerdX);
 			
 			if(thisBubble.getY()>this.getHeight() - thisBubble.getSize() || thisBubble.getY() < 0)  //if the circle's y is off the screen
 			{
@@ -183,12 +209,12 @@ public class RainingBubbles extends Applet
 			g2.setFont(new Font("Arial", Font.PLAIN, 12));
 			g2.setPaint(Color.black);
 			g2.drawString(Integer.toString(thisBubble.getScore()), thisBubble.getX() + thisBubble.getSize() / 3, thisBubble.getY());
-			g2.setPaint(Color.orange);
-			g2.fill(player);
-			g2.setFont(new Font("Arial", Font.BOLD, 35));
-			g2.setPaint(Color.black);
-			g2.drawString("Score: " + score, 25, 40);
 		}
+		g2.setPaint(Color.orange);
+		g2.fill(player);
+		g2.setFont(new Font("Arial", Font.BOLD, 35));
+		g2.setPaint(Color.black);
+		g2.drawString("Score: " + score, 25, 40);
 	}
 }
 
