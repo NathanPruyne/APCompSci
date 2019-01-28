@@ -2,6 +2,7 @@
  * Name: Nathan Pruyne
  * Date: 1/23/19
  * Project: A program to make bubbles rain from the ceiling.  We will adjust it as we go.
+ * Updated: A game where the object is to score points by running into good bubbles, avoid bad ones
  * 
  * 
  *  We have provided you with some working code. With a partner, look through
@@ -38,18 +39,17 @@ public class RainingBubbles extends Applet
 	private final int MAX_Y_VELOCITY = 10;
 	private final int MAX_X_VELOCITY = 10;
 	
-	//these are called "parallel arrays." Is there a better way to handle all
-	//of this data?  Hint... these could all be ATTRIBUTES of a certain class.  Make that class and 
-	//create a single array of that object.
-	
 	private Bubble[] bubbles;
 	
+	
+	//instance fields to keep track of player movement, score
 	private int playerX;
 	private int playerY;
 	private int playerdX;
 	private int playerdY;
 	private int score;
 	
+	//ArrayList to keep track of keys that have been pressed
 	ArrayList<Integer> keys = new ArrayList<Integer>();
 
 	public void init() 
@@ -60,15 +60,15 @@ public class RainingBubbles extends Applet
 		this.resize((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
 					(int)Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 		//sets the screen size to the set default screen size
-		//again, change these parallel arrays to make them better.
-		bubbles = new Bubble[MAX_CIRCLES];
+		bubbles = new Bubble[MAX_CIRCLES]; //uses new array of type bubble
 		boolean good = true;
+		//initializes player position
 		playerX = this.getWidth() / 2;
 		playerY = this.getHeight() / 4 * 3;
 		for(int count = 0;count < MAX_CIRCLES; count++)
 		{
-			bubbles[count] = new Bubble(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, good);//gives each circle initial values by "resetting" it
-			good = !good;
+			bubbles[count] = new Bubble(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, good);//creates new bubble objects
+			good = !good; //makes it so half the bubbles are "good", half are not
 		}
 		
 		//I needed this to use "repaint" the screen. It uses a timer which is "listenedTo" by an ActionListener
@@ -81,7 +81,7 @@ public class RainingBubbles extends Applet
 		};
 		
 		
-		
+		//Initializes a KeyListener to detect keypresses, add them to keys ArrayList
 		KeyListener keyDetector = new KeyListener()
 		{
 			public void keyPressed(KeyEvent press) {
@@ -97,7 +97,7 @@ public class RainingBubbles extends Applet
 			public void keyTyped(KeyEvent arg0) {}
 		};
 		
-		
+		//Adds keyDetector to the applet
 		this.addKeyListener(keyDetector);
 		
 		new Timer(DELAY, taskPerformer).start();
@@ -128,10 +128,13 @@ public class RainingBubbles extends Applet
 	
 	public void paint(Graphics g) 
 	{	
+		//Initializes types of variables
 		Ellipse2D circle;
 		Graphics2D g2 = (Graphics2D)g;
 		Rectangle2D player;
 		player = new Rectangle2D.Double(playerX, playerY, 20, 20);
+		//Updates player movement based on keys in the keys ArrayList
+		//Key presses will update player's movement speed, not position
 		if (keys.contains(KeyEvent.VK_LEFT)) {
 			playerdX -= 2;
 		}
@@ -146,6 +149,7 @@ public class RainingBubbles extends Applet
 		}
 		playerX += playerdX;
 		playerY += playerdY;
+		//Prevents the player from going off the screen
 		if (playerY < 0) {
 			playerY = 0;
 			playerdY = 0;
@@ -162,6 +166,7 @@ public class RainingBubbles extends Applet
 			playerX = this.getWidth() - 20;
 			playerdX = 0;
 		}
+		//Adds "friction" to slow the player down over time
 		if (Math.abs(playerdX) < 1) {
 			playerdX = 0;
 		} else if (playerdX > 0) {
@@ -180,7 +185,7 @@ public class RainingBubbles extends Applet
 		//Document this...what's going on in each line?... there should be a comment for each line.
 		for(int count = 0;count < MAX_CIRCLES; count++)
 		{
-			Bubble thisBubble = bubbles[count];
+			Bubble thisBubble = bubbles[count]; //finds the bubble in the list
 			thisBubble.addY(); //update y by yvelocity
 			thisBubble.addX(); //update x by xvelocity
 			
@@ -198,23 +203,23 @@ public class RainingBubbles extends Applet
 				g2.setPaint(Color.red); //otherwise make it red
 			}
 			circle = new Ellipse2D.Double(thisBubble.getX(), thisBubble.getY(), thisBubble.getSize(), thisBubble.getSize()); //generate the circle graphically	
-			if (circle.intersects(player)) {
-				score += thisBubble.getScore();
-				if (score < 0) {
+			if (circle.intersects(player)) { //If the bubble is touching the player
+				score += thisBubble.getScore(); //Add the bubbles score to the score
+				if (score < 0) { //Avoid a negative score
 					score = 0;
 				}
-				thisBubble.reset(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, thisBubble.isGood());	
+				thisBubble.reset(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, thisBubble.isGood());	//Reset the bubble with new velocity and size
 			}
 			g2.fill(circle); //display the circle on the screen
-			g2.setFont(new Font("Arial", Font.PLAIN, 12));
+			g2.setFont(new Font("Arial", Font.PLAIN, 12))
 			g2.setPaint(Color.black);
-			g2.drawString(Integer.toString(thisBubble.getScore()), thisBubble.getX() + thisBubble.getSize() / 3, thisBubble.getY());
+			g2.drawString(Integer.toString(thisBubble.getScore()), thisBubble.getX() + thisBubble.getSize() / 3, thisBubble.getY()); //Labels the bubble with its score
 		}
 		g2.setPaint(Color.orange);
-		g2.fill(player);
+		g2.fill(player); //Fills in the player
 		g2.setFont(new Font("Arial", Font.BOLD, 35));
 		g2.setPaint(Color.black);
-		g2.drawString("Score: " + score, 25, 40);
+		g2.drawString("Score: " + score, 25, 40); //Displays the score
 	}
 }
 
