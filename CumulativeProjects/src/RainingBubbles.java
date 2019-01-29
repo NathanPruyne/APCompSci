@@ -21,7 +21,6 @@ import java.awt.event.KeyListener; //Utility to do things when keypress detected
 import java.awt.geom.Ellipse2D; //Utility to generate ellipses
 import java.awt.geom.Rectangle2D; //Utility to generate rectangles
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.awt.Graphics2D; //utility to generate geometrical shapes
 
 import javax.swing.Timer; //Utility to fire ActionEvents at regular intervals
@@ -211,7 +210,7 @@ public class RainingBubbles extends Applet
 				thisBubble.reset(this.getWidth(), this.getHeight(), MAX_Y_VELOCITY, MAX_X_VELOCITY, MAX_SIZE, thisBubble.isGood());	//Reset the bubble with new velocity and size
 			}
 			g2.fill(circle); //display the circle on the screen
-			g2.setFont(new Font("Arial", Font.PLAIN, 12))
+			g2.setFont(new Font("Arial", Font.PLAIN, 12));
 			g2.setPaint(Color.black);
 			g2.drawString(Integer.toString(thisBubble.getScore()), thisBubble.getX() + thisBubble.getSize() / 3, thisBubble.getY()); //Labels the bubble with its score
 		}

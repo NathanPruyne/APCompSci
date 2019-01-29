@@ -27,7 +27,7 @@ public class Bubble {
 		if (good) {
 			score = (int) (Math.sqrt(Math.pow(xVelocity, 2) + Math.pow(yVelocity, 2))) * (max_size - size) / 10 + 1;
 		} else {
-			score = (int) (Math.sqrt(max_x_vel * max_x_vel + max_y_vel * max_y_vel) - Math.sqrt(Math.pow(xVelocity, 2) + Math.pow(yVelocity, 2))) * (size) / -10;
+			score = (int) (Math.sqrt(max_x_vel * max_x_vel + max_y_vel * max_y_vel) - Math.sqrt(Math.pow(xVelocity, 2) + Math.pow(yVelocity, 2))) * (size) / -10 - 1;
 		}
 	}
 	
