@@ -51,6 +51,10 @@ public class OrderedPair
 		
 	}
 	
+	public String toString() {
+		return "x = " + x + "\ny = " + y;
+	}
+	
 	
 	
 }
