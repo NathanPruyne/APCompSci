@@ -1,5 +1,5 @@
 
-public class Bird implements Flier {
+public class Bird implements Flier, Comparable<Flier> {
 	
 	private double altitude;
 	private double totalDistance;
@@ -42,6 +42,21 @@ public class Bird implements Flier {
 	
 	public void setAltitude(double alt) {
 		altitude = alt;
+	}
+
+	//returns positive if this totalDistance > other's totalDistance
+	//returns negative if this totalDistance < other's totalDistance
+	//returns 0 if same
+	public int compareTo(Flier other) {
+		return (int) (this.getTotalDistance() - other.getTotalDistance());
+		/*
+		 * if (this.getTotalDistance() > otherFlier.getTotalDistance())
+		 *     return 1;
+		 * else if (this.getTotalDistance() < otherFlier.getTotalDistance())
+		 *     return -1;
+		 * else
+		 *     return 0;
+		 */
 	}
 
 }
