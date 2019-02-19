@@ -19,7 +19,7 @@ public class Bird implements Flier, Comparable<Flier> {
 
 	public String fly(double distance) {
 		totalDistance += distance;
-		return "I'm flying " + distance + "miles, SQUAWK!";	
+		return "I'm flying " + distance + " miles, SQUAWK!";	
 	}
 
 	public String takeOff() {
