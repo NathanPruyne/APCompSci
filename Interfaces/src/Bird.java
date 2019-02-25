@@ -8,13 +8,13 @@ public class Bird implements Flier, Comparable<Flier> {
 	public Bird(double alt, double dist, String c) {
 		altitude = alt;
 		totalDistance = dist;
-		myFeatherColor = c;
+		setMyFeatherColor(c);
 	}
 	
 	public Bird() {
 		altitude = 0;
 		totalDistance = 0;
-		myFeatherColor = "Red";
+		setMyFeatherColor("Red");
 	}
 
 	public String fly(double distance) {
@@ -44,19 +44,27 @@ public class Bird implements Flier, Comparable<Flier> {
 		altitude = alt;
 	}
 
-	//returns positive if this totalDistance > other's totalDistance
-	//returns negative if this totalDistance < other's totalDistance
-	//returns 0 if same
-	public int compareTo(Flier other) {
-		return (int) (this.getTotalDistance() - other.getTotalDistance());
-		/*
-		 * if (this.getTotalDistance() > otherFlier.getTotalDistance())
-		 *     return 1;
-		 * else if (this.getTotalDistance() < otherFlier.getTotalDistance())
-		 *     return -1;
-		 * else
-		 *     return 0;
-		 */
+	public String getFeatherColor() {
+		return myFeatherColor;
 	}
+
+	public void setMyFeatherColor(String c) {
+		this.myFeatherColor = c;
+	}
+	
+	//returns positive if this totalDistance > other's totalDistance
+		//returns negative if this totalDistance < other's totalDistance
+		//returns 0 if same
+		public int compareTo(Flier other) {
+			return (int) (this.getTotalDistance() - other.getTotalDistance());
+			/*
+			 * if (this.getTotalDistance() > otherFlier.getTotalDistance())
+			 *     return 1;
+			 * else if (this.getTotalDistance() < otherFlier.getTotalDistance())
+			 *     return -1;
+			 * else
+			 *     return 0;
+			 */
+		}
 
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class FlierTester {
 
@@ -32,6 +34,27 @@ public class FlierTester {
 		
 		System.out.println(a1.compareTo(b2)); //valid because b2 is a flier, method signature allows comparing with other fliers
 		//This is very useful because we can now compare across classes
+		
+		ArrayList<Flier> someFliers = new ArrayList<Flier>();
+		
+		for (int i = 0; i < 5; i++) {
+			int rand = ((int) (Math.random() * 2)) + 1;
+			if (rand == 1) {
+				someFliers.add(new Bird());
+			} else {
+				someFliers.add(new Airplane());
+			}
+		}
+		System.out.println(someFliers.get(2).fly(20));
+		
+		//loop through someFliers and print out feather color of all birds
+		for (Flier f: someFliers) {
+			if (f instanceof Bird) {
+				System.out.println(((Bird) f).getFeatherColor());
+			} else {
+				System.out.println(f.takeOff());
+			}
+		}
 		
 	}
 
