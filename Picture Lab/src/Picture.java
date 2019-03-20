@@ -131,13 +131,38 @@ public class Picture extends SimplePicture
 	  }
   }
   
+  public void sepia() {
+	  Pixel[][] pixels = this.getPixels2D();
+	  for (Pixel[] rowArray: pixels) {
+		  for (Pixel pixelObj: rowArray) {
+			  int avg = (pixelObj.getBlue() + pixelObj.getGreen() + pixelObj.getRed()) / 3;
+			  pixelObj.setRed((int) (243 * avg / 255));
+			  pixelObj.setGreen((int) (207 * avg / 255));
+			  pixelObj.setBlue((int) (151.5 * avg / 255));
+		  }
+	  }
+  }
+  
   public void fixUnderwater() {
 	  Pixel[][] pixels = this.getPixels2D();
 	  for (Pixel[] rowArray: pixels) {
 		  for (Pixel pixelObj: rowArray) {
 			  if (pixelObj.getBlue() > 170) {
-				  pixelObj.setBlue(pixelObj.getBlue() + 30);
+				  pixelObj.setBlue((int) (pixelObj.getBlue() * 1.2));
 			  }
+		  }
+	  }
+  }
+  
+  public void myFilter() {
+	  Pixel[][] pixels = this.getPixels2D();
+	  for (Pixel[] rowArray: pixels) {
+		  for (Pixel pixelObj: rowArray) {
+			  ArrayList<Integer> rgbVals = new ArrayList<Integer>();
+			  rgbVals.add(pixelObj.getRed());
+			  rgbVals.add(pixelObj.getGreen());
+			  rgbVals.add(pixelObj.getBlue());
+			  int max = Collections.max(rgbVals);
 		  }
 	  }
   }
@@ -267,9 +292,9 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("water.jpg");
+    Picture beach = new Picture("beach.jpg");
     beach.explore();
-    beach.fixUnderwater();
+    beach.sepia();
     beach.explore();
     
   }
