@@ -163,6 +163,57 @@ public class Picture extends SimplePicture
 			  rgbVals.add(pixelObj.getGreen());
 			  rgbVals.add(pixelObj.getBlue());
 			  int max = Collections.max(rgbVals);
+			  int maxIndex = rgbVals.indexOf(max);
+			  if (maxIndex == 0) {
+				  pixelObj.setRed(max + 25);
+				  if (rgbVals.get(1) < rgbVals.get(2)) {
+					  pixelObj.setGreen(rgbVals.get(1) - 25);
+				  } else {
+					  pixelObj.setBlue(rgbVals.get(2) - 25);
+				  }
+			  } else if (maxIndex == 1) {
+				  pixelObj.setGreen(max + 25);
+				  if (rgbVals.get(0) < rgbVals.get(2)) {
+					  pixelObj.setRed(rgbVals.get(0) - 25);
+				  } else {
+					  pixelObj.setBlue(rgbVals.get(2) - 25);
+				  }
+			  } else {
+				  pixelObj.setBlue(max + 25);
+				  if (rgbVals.get(1) < rgbVals.get(0)) {
+					  pixelObj.setGreen(rgbVals.get(1) - 25);
+				  } else {
+					  pixelObj.setRed(rgbVals.get(0) - 25);
+				  }
+			  }
+		  }
+	  }
+  }
+  
+  public void blackOutFaces() { //SCALE PICTURE BY 0.2
+	  Pixel[][] pixels = this.getPixels2D();
+	  for (int r = 288; r <= 357; r++) {
+		  for (int c = 485; c <= 557; c++) {
+			  Pixel pixelObj = pixels[r][c];
+			  pixelObj.setRed(0);
+			  pixelObj.setGreen(0);
+			  pixelObj.setBlue(0);
+		  }
+	  }
+	  for (int r = 187; r <= 225; r++) {
+		  for (int c = 297; c <= 329; c++) {
+			  Pixel pixelObj = pixels[r][c];
+			  pixelObj.setRed(0);
+			  pixelObj.setGreen(0);
+			  pixelObj.setBlue(0);
+		  }
+	  }
+	  for (int r = 420; r <= 494; r++) {
+		  for (int c = 334; c <= 391; c++) {
+			  Pixel pixelObj = pixels[r][c];
+			  pixelObj.setRed(0);
+			  pixelObj.setGreen(0);
+			  pixelObj.setBlue(0);
 		  }
 	  }
   }
@@ -183,6 +234,23 @@ public class Picture extends SimplePicture
         leftPixel = pixels[row][col];
         rightPixel = pixels[row][width - 1 - col];
         rightPixel.setColor(leftPixel.getColor());
+      }
+    } 
+  }
+  
+  public void mirrorVerticalRightToLeft()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    int width = pixels[0].length;
+    for (int row = 0; row < pixels.length; row++)
+    {
+      for (int col = 0; col < width / 2; col++)
+      {
+        leftPixel = pixels[row][col];
+        rightPixel = pixels[row][width - 1 - col];
+        leftPixel.setColor(rightPixel.getColor());
       }
     } 
   }
@@ -292,9 +360,9 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("beach.jpg");
+    Picture beach = new Picture("blueMotorcycle.jpg");
     beach.explore();
-    beach.sepia();
+    beach.mirrorVerticalRightToLeft();
     beach.explore();
     
   }
