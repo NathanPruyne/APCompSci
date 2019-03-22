@@ -49,12 +49,37 @@ public class PictureTester
     water.explore();
   }
   
+  public static void testMyFilter()
+  {
+    Picture water = new Picture("beach.jpg");
+    water.explore();
+    water.myFilter();
+    water.explore();
+  }
+  
+  public static void testBlackOutFaces()
+  {
+    Picture water = new Picture("Period 2 2019.jpg");
+    water = water.scale(0.2, 0.2);
+    water.explore();
+    water.blackOutFaces();
+    water.explore();
+  }
+  
   /** Method to test mirrorVertical */
   public static void testMirrorVertical()
   {
     Picture caterpillar = new Picture("caterpillar.jpg");
     caterpillar.explore();
     caterpillar.mirrorVertical();
+    caterpillar.explore();
+  }
+  
+  public static void testMirrorVerticalRightToLeft()
+  {
+    Picture caterpillar = new Picture("beach.jpg");
+    caterpillar.explore();
+    caterpillar.mirrorVerticalRightToLeft();
     caterpillar.explore();
   }
   
@@ -96,8 +121,11 @@ public class PictureTester
     //testKeepOnlyGreen();
     testNegate();
     testGrayscale();
+	  testMyFilter();
+	  testBlackOutFaces();
     //testFixUnderwater();
     //testMirrorVertical();
+	  testMirrorVerticalRightToLeft();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
